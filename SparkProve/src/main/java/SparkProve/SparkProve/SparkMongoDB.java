@@ -21,7 +21,7 @@ public class SparkMongoDB {
 JavaSparkContext sc = new JavaSparkContext("local", "Java Word Count");
         
         Configuration config = new Configuration();
-        config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/test.prova");
+        config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/test.events");
         JavaPairRDD<Object, BSONObject> mongoRDD = sc.newAPIHadoopRDD(config, com.mongodb.hadoop.MongoInputFormat.class, Object.class, BSONObject.class);
         /*JavaRDD<String> words = mongoRDD.flatMap(new FlatMapFunction<Tuple2<Object, BSONObject>, String>() {
             public Iterable<String> call(Tuple2<Object, BSONObject> arg) {
@@ -35,11 +35,11 @@ JavaSparkContext sc = new JavaSparkContext("local", "Java Word Count");
         });*/
         long res =mongoRDD.filter(new Function<Tuple2<Object, BSONObject>, Boolean>() {
         	public Boolean call(Tuple2<Object, BSONObject> arg)throws Exception {
-				Object o = arg._2.get("item");
-				System.out.println(arg._2.get("item"));
+				Object o = arg._2.get("killerweapon");
+				System.out.println(arg._2.get("killerweapon"));
 				 String str = (String) o;
 				          
-				return str.equals("card");
+				return str.equals("AK47");
 			}}).count();
         	
 		System.out.println(res);
