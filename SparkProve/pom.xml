@@ -20,7 +20,6 @@
 	<artifactId>mongo-java-driver</artifactId>
 	<version>3.0.2</version>
 </dependency>
-  
   <dependency>
     <groupId>org.mongodb.mongo-hadoop</groupId>
     <artifactId>mongo-hadoop-core</artifactId>
