@@ -1,4 +1,4 @@
-package SparkProve.SparkProve;
+package sparkAnalysis;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
