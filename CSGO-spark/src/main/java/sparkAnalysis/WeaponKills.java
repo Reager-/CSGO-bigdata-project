@@ -9,6 +9,9 @@ import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
 import org.bson.BSONObject;
+import org.bson.BasicBSONObject;
+
+import com.mongodb.hadoop.MongoOutputFormat;
 
 import scala.Tuple2;
 
@@ -20,6 +23,12 @@ public class WeaponKills {
         
         Configuration config = new Configuration();
         config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/test.events");
+        /*scrivere su Mongo
+        config.set("mongo.output.uri", "mongodb://127.0.0.1:27017/test.outputWeaponKill");
+
+        */
+        
+        
         JavaPairRDD<Object, BSONObject> mongoRDD = sc.newAPIHadoopRDD(config, com.mongodb.hadoop.MongoInputFormat.class, Object.class, BSONObject.class);
         
         JavaPairRDD<Object, BSONObject> killsRDD = mongoRDD.filter(new Function<Tuple2<Object, BSONObject>, Boolean>() {
@@ -66,6 +75,23 @@ public class WeaponKills {
         for (Tuple2<?,?> tuple : output) {
           System.out.println(tuple._1() + ": " + tuple._2());
         }
+        
+        /*codice scrive su Mongo
+        JavaPairRDD<Object, BSONObject> save = orderedCountWeaponsUsedRDD.mapToPair(new PairFunction<Tuple2<String, Integer>, Object, BSONObject>() {
+        	@Override
+        	public Tuple2<Object, BSONObject> call(Tuple2<String, Integer> tuple) {
+        	BSONObject bson = new BasicBSONObject();
+        	                bson.put("Weapon", tuple._1);
+        	                bson.put("NumberOfKills", tuple._2);
+        	return new Tuple2<>(null, bson);
+        	            }
+        	        });
+        
+        save.saveAsNewAPIHadoopFile("file:///bogus", Object.class, Object.class, MongoOutputFormat.class, config);
+        
+        */
+        
+        
         
         sc.stop();
         sc.close();

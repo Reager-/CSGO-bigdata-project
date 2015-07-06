@@ -50,6 +50,7 @@ public class MapFactionBalance {
             return i1 + i2;
           }
         });
+        
         List<Tuple2<String, Integer>> output = countWeaponsUsedRDD.sortByKey().collect();
         Iterator<Tuple2<String, Integer>> it=output.iterator();
         while(it.hasNext()) {
