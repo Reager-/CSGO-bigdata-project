@@ -17,6 +17,7 @@ public class KillsHeatZones {
 	
 	public static void main( String[] args )
     {
+		String map=args[0];
 		JavaSparkContext sc = new JavaSparkContext("local", "KMeans Killed Positions");
         
         Configuration config = new Configuration();
@@ -34,7 +35,7 @@ public class KillsHeatZones {
         	        public Vector call(Tuple2<Object, BSONObject> record) throws Exception {
         	        Object mapname = record._2.get("map");
             	    String scheck = (String) mapname;
-            	    if (scheck.equals("de_mirage"));{
+            	    if (scheck.equals(map));{
 	        	        Object killerPosition = record._2.get("killedposition");
 	        	        String str = (String) killerPosition;
 	        	        String[] sarray = str.split(";");
