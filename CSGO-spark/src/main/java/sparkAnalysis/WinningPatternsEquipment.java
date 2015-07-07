@@ -81,9 +81,39 @@ public class WinningPatternsEquipment {
         .setMinSupport(minSupport)
         .setNumPartitions(numPartitions)
         .run(equipmentRDD);
-
+        
+        LinkedList<Tuple2<String, Long>> collection = new LinkedList<Tuple2<String, Long>>();
+        
 		for (FPGrowth.FreqItemset<String> itemset: model.freqItemsets().toJavaRDD().collect()) {
-		   System.out.println("[" + Joiner.on(",").join(itemset.javaItems()) + "], " + itemset.freq());
+			String pattern = "[" + Joiner.on(",").join(itemset.javaItems()) + "]: ";
+			long freq = itemset.freq();
+			collection.add(new Tuple2<String, Long>(pattern,freq));
 		}
+		
+		JavaRDD<Tuple2<String, Long>> collectionRDD = sc.parallelize(collection);
+		JavaPairRDD<String, Long> collectionPairRDD = JavaPairRDD.fromJavaRDD(collectionRDD);
+		
+		JavaPairRDD<Long, String> swappedPairRDD = collectionPairRDD.mapToPair(new PairFunction<Tuple2<String, Long>, Long, String>() {
+            @Override
+            public Tuple2<Long, String> call(Tuple2<String, Long> item) throws Exception {
+                return item.swap();
+            }
+
+         });
+        		
+        JavaPairRDD<Long, String> swappedOrderedPatternsRDD = swappedPairRDD.sortByKey(false);
+        
+        JavaPairRDD<String, Long> resultRDD = swappedOrderedPatternsRDD.mapToPair(new PairFunction<Tuple2<Long, String>, String, Long>() {
+            @Override
+            public Tuple2<String, Long> call(Tuple2<Long, String> item) throws Exception {
+                return item.swap();
+            }
+
+         });
+        
+        List<Tuple2<String, Long>> output = resultRDD.collect();
+        for (Tuple2<String,Long> tuple : output) {
+          System.out.println(tuple._1() + " " + tuple._2());
+        }
     }
 }
