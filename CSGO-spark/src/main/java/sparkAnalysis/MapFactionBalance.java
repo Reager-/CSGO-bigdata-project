@@ -21,14 +21,14 @@ public class MapFactionBalance {
         Configuration config = new Configuration();
         config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/test.events");
         JavaPairRDD<Object, BSONObject> mongoRDD = sc.newAPIHadoopRDD(config, com.mongodb.hadoop.MongoInputFormat.class, Object.class, BSONObject.class);
-        JavaPairRDD<Object, BSONObject> killsRDD = mongoRDD.filter(new Function<Tuple2<Object, BSONObject>, Boolean>() {
+        JavaPairRDD<Object, BSONObject> roundResultsRDD = mongoRDD.filter(new Function<Tuple2<Object, BSONObject>, Boolean>() {
         	public Boolean call(Tuple2<Object, BSONObject> arg)throws Exception {
 				Object o = arg._2.get("event");
 				 String str = (String) o;
 				 return str.equals("roundResults");
 			}});
         
-        JavaPairRDD<String, Integer> mappedWeaponsRDD = killsRDD.mapToPair(new PairFunction<Tuple2<Object, BSONObject>,String,Integer>(){
+        JavaPairRDD<String, Integer> winFactionRDD = roundResultsRDD.mapToPair(new PairFunction<Tuple2<Object, BSONObject>,String,Integer>(){
 			@Override
 			public Tuple2<String, Integer> call(Tuple2<Object, BSONObject> record)
 					throws Exception {
@@ -45,13 +45,13 @@ public class MapFactionBalance {
 			    	
 				return coppia;
 			}}); 
-        JavaPairRDD<String, Integer> countWeaponsUsedRDD = mappedWeaponsRDD.reduceByKey(new Function2<Integer, Integer, Integer>() {
+        JavaPairRDD<String, Integer> countWinRDD = winFactionRDD.reduceByKey(new Function2<Integer, Integer, Integer>() {
         	public Integer call(Integer i1, Integer i2) {
             return i1 + i2;
           }
         });
         
-        List<Tuple2<String, Integer>> output = countWeaponsUsedRDD.sortByKey().collect();
+        List<Tuple2<String, Integer>> output = countWinRDD.sortByKey().collect();
         Iterator<Tuple2<String, Integer>> it=output.iterator();
         while(it.hasNext()) {
         	Tuple2<String, Integer> Counter=it.next();
