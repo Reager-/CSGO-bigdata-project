@@ -29,6 +29,7 @@ public class CamperMap {
 				 String str = (String) o;
 				 return str.equals("roundResults");
 			}});
+        
         JavaPairRDD<String, Double> PassiRDD = mongoRDD.mapToPair(new PairFunction<Tuple2<Object, BSONObject>,String,Double>(){
 			@Override
 			public Tuple2<String, Double> call(Tuple2<Object, BSONObject> record)
@@ -39,7 +40,7 @@ public class CamperMap {
 				Double npassi = null;
 				if (o1 instanceof String) {
 					String p=(String )o1;
-					return new Tuple2<String, Double>(mappa, 1.0);
+					return new Tuple2<String, Double>(mappa.toLowerCase(), 1.0);
 				}
 				if (o1 instanceof Integer) {
 					Integer p = (Integer)o1;
@@ -77,7 +78,8 @@ public class CamperMap {
 			}});
         List<Tuple2<String,String>> output = resultRDD.collect();
         for (Tuple2<?,?> tuple : output) {
-          System.out.println(tuple._1() + ": " + tuple._2());
+        	if(!tuple._1.equals(""))
+              System.out.println(tuple._1() + ": " + tuple._2());
         }
         
         

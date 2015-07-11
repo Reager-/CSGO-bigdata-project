@@ -35,6 +35,7 @@ public class KillsHeatZones {
         	        public Vector call(Tuple2<Object, BSONObject> record) throws Exception {
         	        Object mapname = record._2.get("map");
             	    String scheck = (String) mapname;
+            	    scheck=scheck.toLowerCase();
             	    if (scheck.equals(map));{
 	        	        Object killerPosition = record._2.get("killedposition");
 	        	        String str = (String) killerPosition;

@@ -38,9 +38,9 @@ public class MapFactionBalance {
 				String win = (String) o1;
 				Tuple2<String, Integer> coppia;
 			    if(win.equals("Terrorist")){
-			    	coppia=new Tuple2<String, Integer>(mappa+"T", 1);
+			    	coppia=new Tuple2<String, Integer>(mappa.toLowerCase()+"T", 1);
 			    }else{
-			    	coppia=new Tuple2<String, Integer>(mappa+"C", 1);
+			    	coppia=new Tuple2<String, Integer>(mappa.toLowerCase()+"C", 1);
 			    }
 			    	
 				return coppia;
