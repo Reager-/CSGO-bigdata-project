@@ -2,8 +2,10 @@ package sparkAnalysis;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -54,9 +56,22 @@ public class WinningPatternsEquipment {
 					for(String str:strArray){
 						str = str.replaceAll("Knife", "");
 						str = str.replaceAll("Bomb", "");
-						ArrayList<String> result = Lists.newArrayList(str.split("-"));
-						result.removeAll(Arrays.asList(null, ""));
+						str = str.replaceFirst("Flash", "Flash1");
+						Set<String> set = new HashSet<String>();
+						ArrayList<String> weapons = Lists.newArrayList(str.split("-"));
+						weapons.removeAll(Arrays.asList(null, ""));
+						ArrayList<String> result = new ArrayList<String>();
+						if (weapons.size()!=0){
+						for (String s: weapons)
+							set.add(s);
+						for (String s: set)
+							result.add(s);
 						return result;
+						}
+						else{
+							result.add("empty");
+							return result;
+						}
 					}
 					} else{
 					Object tEquipment = record._2.get("tequipment");
@@ -65,9 +80,22 @@ public class WinningPatternsEquipment {
 					for(String str:strArray){
 						str = str.replaceAll("Knife", "");
 						str = str.replaceAll("Bomb", "");
-						ArrayList<String> result = Lists.newArrayList(str.split("-"));
-						result.removeAll(Arrays.asList(null, ""));
+						str = str.replaceFirst("Flash", "Flash1");
+						Set<String> set = new HashSet<String>();
+						ArrayList<String> weapons = Lists.newArrayList(str.split("-"));
+						weapons.removeAll(Arrays.asList(null, ""));
+						ArrayList<String> result = new ArrayList<String>();
+						if (weapons.size()!=0){
+						for (String s: weapons)
+							set.add(s);
+						for (String s: set)
+							result.add(s);
 						return result;
+						}
+						else{
+							result.add("empty");
+							return result;
+						}
 					}
 					}
 				return null;

@@ -50,7 +50,7 @@ public class KillsHeatZones {
         	    );
         killedPositionsRDD.cache();
         
-        int numClusters = 20;
+        int numClusters = 15;
         int numIterations = 50;
         KMeansModel clusters = KMeans.train(vectorsRDD.rdd(), numClusters, numIterations);
         
