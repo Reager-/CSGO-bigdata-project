@@ -36,11 +36,12 @@ public class CamperMap {
 					throws Exception {
 				Object o = record._2.get("map");
 				String mappa = (String) o;
+				mappa=mappa.toLowerCase();
 				Object o1 = record._2.get("twalk");
 				Double npassi = null;
 				if (o1 instanceof String) {
 					String p=(String )o1;
-					return new Tuple2<String, Double>(mappa.toLowerCase(), 1.0);
+					return new Tuple2<String, Double>(mappa, 1.0);
 				}
 				if (o1 instanceof Integer) {
 					Integer p = (Integer)o1;
@@ -61,17 +62,21 @@ public class CamperMap {
 				
 				double tot=0,count=0,max=0,min= Double.MAX_VALUE;
 				while(it.hasNext()){
-					count++;
 					Double passi=it.next();
+					// 300000 e 5000 per round di warm up
+					if(passi!=null&&passi.doubleValue()>5000){
+					count++;
+					// 300000 per round di warm up
 					if(max<passi.doubleValue() ){
 						max=passi;
 					}
+					// 5000 per round di warm up
 					if(passi.doubleValue()!=0&&min>passi.doubleValue()){
 						min=passi;
 					}
 					tot=tot+passi;
 					
-					
+					}
 				}
 				String result=min+"  "+tot/count+"  "+max;
 				return new Tuple2<String, String>(record._1(), result);
