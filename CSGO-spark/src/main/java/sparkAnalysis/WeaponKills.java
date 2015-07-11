@@ -22,9 +22,9 @@ public class WeaponKills {
 		JavaSparkContext sc = new JavaSparkContext("local", "Most Used Weapons");
         
         Configuration config = new Configuration();
-        config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/test.events");
+        config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/CSGO.events");
         /*scrivere su Mongo
-        config.set("mongo.output.uri", "mongodb://127.0.0.1:27017/test.outputWeaponKill");
+        config.set("mongo.output.uri", "mongodb://127.0.0.1:27017/CSGO.outputWeaponKills");
 
         */
         
