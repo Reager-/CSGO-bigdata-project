@@ -48,7 +48,7 @@ public class KillsHeatZones {
         	        }
         	      }
         	    );
-        killedPositionsRDD.cache();
+        vectorsRDD.cache();
         
         int numClusters = 20;
         int numIterations = 50;
