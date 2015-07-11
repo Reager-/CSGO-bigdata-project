@@ -71,7 +71,7 @@ public class CamperMap {
 						max=passi;
 					}
 					// 5000 per round di warm up
-					if(passi.doubleValue()!=0&&min>passi.doubleValue()){
+					if(min>passi.doubleValue()){
 						min=passi;
 					}
 					tot=tot+passi;

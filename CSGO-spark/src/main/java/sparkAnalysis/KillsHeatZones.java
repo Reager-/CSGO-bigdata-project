@@ -48,7 +48,6 @@ public class KillsHeatZones {
         	        }
         	      }
         	    );
-        
         vectorsRDD.cache();
         
         int numClusters = 10;
