@@ -30,11 +30,7 @@ public class WinningPatternsEquipment {
 		JavaSparkContext sc = new JavaSparkContext("local", "Winning Patterns Equipment");
         
         Configuration config = new Configuration();
-        config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/test.events");
-        /*scrivere su Mongo
-        config.set("mongo.output.uri", "mongodb://127.0.0.1:27017/test.outputWeaponKill");
-
-        */
+        config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/CSGO.events");
         
         JavaPairRDD<Object, BSONObject> mongoRDD = sc.newAPIHadoopRDD(config, com.mongodb.hadoop.MongoInputFormat.class, Object.class, BSONObject.class);
         

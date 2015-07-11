@@ -21,7 +21,7 @@ public class CamperMap {
 		JavaSparkContext sc = new JavaSparkContext("local", "CamperMap");
         
         Configuration config = new Configuration();
-        config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/test.testProblema");
+        config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/CSGO.events");
         JavaPairRDD<Object, BSONObject> mongoRDD = sc.newAPIHadoopRDD(config, com.mongodb.hadoop.MongoInputFormat.class, Object.class, BSONObject.class);
         JavaPairRDD<Object, BSONObject> roundResultsRDD = mongoRDD.filter(new Function<Tuple2<Object, BSONObject>, Boolean>() {
         	public Boolean call(Tuple2<Object, BSONObject> arg)throws Exception {

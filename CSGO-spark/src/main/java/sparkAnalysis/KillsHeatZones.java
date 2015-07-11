@@ -21,7 +21,7 @@ public class KillsHeatZones {
 		JavaSparkContext sc = new JavaSparkContext("local", "KMeans Killed Positions");
         
         Configuration config = new Configuration();
-        config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/test.events");
+        config.set("mongo.input.uri", "mongodb://127.0.0.1:27017/CSGO.events");
         JavaPairRDD<Object, BSONObject> mongoRDD = sc.newAPIHadoopRDD(config, com.mongodb.hadoop.MongoInputFormat.class, Object.class, BSONObject.class);
         
         JavaPairRDD<Object, BSONObject> killedPositionsRDD = mongoRDD.filter(new Function<Tuple2<Object, BSONObject>, Boolean>() {
