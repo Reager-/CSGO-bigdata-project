@@ -76,7 +76,7 @@ public class WeaponKills {
           System.out.println(tuple._1() + ": " + tuple._2());
         }
         
-        /*codice scrive su Mongo
+        /*codice scrive su MongoDB
         JavaPairRDD<Object, BSONObject> save = orderedCountWeaponsUsedRDD.mapToPair(new PairFunction<Tuple2<String, Integer>, Object, BSONObject>() {
         	@Override
         	public Tuple2<Object, BSONObject> call(Tuple2<String, Integer> tuple) {
