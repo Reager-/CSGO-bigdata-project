@@ -48,10 +48,11 @@ public class KillsHeatZones {
         	        }
         	      }
         	    );
-        killedPositionsRDD.cache();
         
-        int numClusters = 15;
-        int numIterations = 50;
+        vectorsRDD.cache();
+        
+        int numClusters = 20;
+        int numIterations = 40;
         KMeansModel clusters = KMeans.train(vectorsRDD.rdd(), numClusters, numIterations);
         
         System.out.println("Cluster centers:");
